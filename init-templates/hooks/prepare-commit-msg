@@ -1,0 +1,14 @@
+#!/bin/sh
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+if [ "$(uname)" == "Darwin" ]; then
+  sed -i '' -re 's! https?://[^/]+/[^/]+/(docs_[^/]+)/-/issues/! \1#!g' "$COMMIT_MSG_FILE"
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  sed -i -E 's! https?://[^/]+/[^/]+/(docs_[^/]+)/-/issues/! \1#!g' "$COMMIT_MSG_FILE"
+else
+  echo "unknown OS"
+  exit 1
+fi
